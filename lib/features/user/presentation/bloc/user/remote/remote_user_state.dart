@@ -5,11 +5,18 @@ import 'package:suitmedia/features/user/domain/entities/user.dart';
 abstract class RemoteUserState extends Equatable {
   final List<UserEntity>? users;
   final DioException? exception;
+  final bool hasReachedMax;
+  final int currentPage;
 
-  const RemoteUserState({this.users, this.exception});
+  const RemoteUserState({
+    this.users, 
+    this.exception,
+    this.hasReachedMax = false,
+    this.currentPage = 1,
+  });
 
   @override
-  List<Object?> get props => [users, exception];
+  List<Object?> get props => [users, exception, hasReachedMax, currentPage];
 }
 
 class RemoteUserLoading extends RemoteUserState {
@@ -17,7 +24,13 @@ class RemoteUserLoading extends RemoteUserState {
 }
 
 class RemoteUserDone extends RemoteUserState {
-  const RemoteUserDone(List<UserEntity> user) : super(users: user);
+  const RemoteUserDone(
+    List<UserEntity> users, {
+    super.hasReachedMax,
+    super.currentPage,
+  }) : super(
+    users: users,
+  );
 }
 
 class RemoteUserException extends RemoteUserState {

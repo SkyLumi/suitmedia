@@ -134,7 +134,7 @@ class SecondScreen extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => BlocProvider(
-          create: (context) => sl<RemoteUserBloc>()..add(const GetUsers()),
+          create: (context) => sl<RemoteUserBloc>()..add(const GetUsers(page: 1, isRefresh: true)),
           child: ThirdScreen(
             onUserSelected: (user) {
               homepageBloc.add(SelectUser(user));

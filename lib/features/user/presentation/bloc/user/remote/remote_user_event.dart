@@ -3,5 +3,8 @@ abstract class RemoteUserEvent {
 }
 
 class GetUsers extends RemoteUserEvent {
-  const GetUsers();
+  final int page;
+  final bool isRefresh;
+  
+  const GetUsers({this.page = 1, this.isRefresh = false});
 }

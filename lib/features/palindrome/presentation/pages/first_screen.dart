@@ -120,7 +120,7 @@ class _FirstScreenState extends State<FirstScreen> {
                   BlocConsumer<PalindromeBloc, PalindromeState>(
                     listener: (context, state) {
                       if (state is PalindromeDone) {
-                        String message = state.isPalindrome ? "Ini Palindrome" : "Bukan Palindrome";
+                        String message = state.isPalindrome ? "IsPalindrome" : "not palindrome";
                         _showDialog("Result", message);
                       } 
                       else if (state is PalindromeError) {

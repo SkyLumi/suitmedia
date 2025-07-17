@@ -11,7 +11,7 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl(this._userApiService);
 
   @override
-  Future<DataState<List<UserModel>>> getUsers() async {
+  Future<DataState<List<UserModel>>> getUsers({int pageQuery = 1}) async {
     try {
       final httpResponse = await _userApiService.getUsers(
         page: pageQuery,

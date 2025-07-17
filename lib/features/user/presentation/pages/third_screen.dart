@@ -6,10 +6,49 @@ import 'package:suitmedia/features/user/presentation/bloc/user/remote/remote_use
 import 'package:suitmedia/features/user/presentation/bloc/user/remote/remote_user_event.dart';
 import 'package:suitmedia/features/user/presentation/widgets/user_list.dart';
 
-class ThirdScreen extends StatelessWidget {
+class ThirdScreen extends StatefulWidget {
   final Function(UserEntity)? onUserSelected;
 
   const ThirdScreen({super.key, this.onUserSelected});
+
+  @override
+  State<ThirdScreen> createState() => _ThirdScreenState();
+}
+
+class _ThirdScreenState extends State<ThirdScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_isBottom) {
+      final currentState = context.read<RemoteUserBloc>().state;
+      if (currentState is RemoteUserDone && 
+          !currentState.hasReachedMax && 
+          currentState.users!.isNotEmpty) {
+        context.read<RemoteUserBloc>().add(
+          GetUsers(page: currentState.currentPage + 1)
+        );
+      }
+    }
+  }
+
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll - 200);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +110,10 @@ class ThirdScreen extends StatelessWidget {
           
           return RefreshIndicator(
             onRefresh: () async {
-              context.read<RemoteUserBloc>().add(const GetUsers());
+              context.read<RemoteUserBloc>().add(const GetUsers(page: 1, isRefresh: true));
             },
             child: ListView.separated(
+              controller: _scrollController,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               itemCount: users.length,
               separatorBuilder: (context, index) => const Divider(
@@ -89,8 +129,8 @@ class ThirdScreen extends StatelessWidget {
                   email: user.email ?? '',
                   avatarUrl: user.avatar ?? '',
                   onTap: () {
-                    if (onUserSelected != null) {
-                      onUserSelected!(user);
+                    if (widget.onUserSelected != null) {
+                      widget.onUserSelected!(user);
                     }
                     Navigator.of(context).pop(user);
                   },
