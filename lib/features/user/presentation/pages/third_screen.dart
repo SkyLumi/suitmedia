@@ -83,7 +83,6 @@ class ThirdScreen extends StatelessWidget {
               ),
               itemBuilder: (context, index) {
                 final user = users[index];
-                // Debug print
                 return UserListItem(
                   firstName: user.firstName ?? '',
                   lastName: user.lastName ?? '',

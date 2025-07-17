@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:suitmedia/features/palindrome/presentation/bloc/palindrome_bloc.dart';
 import 'package:suitmedia/features/palindrome/presentation/bloc/palindrome_event.dart';
 import 'package:suitmedia/features/palindrome/presentation/bloc/palindrome_state.dart';
-import 'package:suitmedia/features/homepage/presentation/pages/homepage.dart';
+import 'package:suitmedia/features/homepage/presentation/pages/second_screen.dart';
 import 'package:suitmedia/injection_container.dart';
 
 class FirstScreen extends StatefulWidget {
@@ -176,7 +176,7 @@ class _FirstScreenState extends State<FirstScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Homepage(userName: name),
+                              builder: (context) => SecondScreen(userName: name),
                             ),
                           );
                         } 

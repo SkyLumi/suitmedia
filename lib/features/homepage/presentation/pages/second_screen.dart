@@ -8,10 +8,10 @@ import 'package:suitmedia/features/user/presentation/bloc/user/remote/remote_use
 import 'package:suitmedia/features/user/presentation/bloc/user/remote/remote_user_event.dart';
 import 'package:suitmedia/injection_container.dart';
 
-class Homepage extends StatelessWidget {
+class SecondScreen extends StatelessWidget {
   final String userName;
 
-  const Homepage({
+  const SecondScreen({
     super.key,
     required this.userName,
   });
@@ -86,9 +86,7 @@ class Homepage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
-                      color: state.selectedUser != null 
-                          ? const Color(0xFF04021D)
-                          : Colors.grey[400],
+                      color: const Color(0xFF04021D)
                     ),
                     textAlign: TextAlign.center,
                   ),
